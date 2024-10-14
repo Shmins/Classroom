@@ -1,5 +1,7 @@
 package com.classroom.main.model;
 
+
+import com.classroom.main.model.Utils.Turn;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,23 +12,25 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 
-@Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "teacher")
-public class Teacher {
+@Entity
+@Table(name = "classroom")
+public class Classroom {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Setter
-    private String name;
+    private String name_class;
 
-    private String email;
+    private String School_segment;
 
-    private String password;
+    @Enumerated(EnumType.STRING)
+    private Turn turn;
+
+    private Long id_teacher;
 
     @CreationTimestamp
     private LocalDateTime createdDate;
