@@ -1,0 +1,66 @@
+package com.classroom.main.controller;
+
+import com.classroom.main.controller.dto.ClassroomDTO;
+import com.classroom.main.controller.dto.CreateClassroomDTO;
+import com.classroom.main.model.Classroom;
+import com.classroom.main.service.ClassroomService;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.net.URI;
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Tag(name = "Classroom", description = "Classroom API")
+@RestController
+@RequestMapping("/classroom")
+public class ClassroomController {
+    private final ClassroomService classroomService;
+
+
+    public ClassroomController(ClassroomService classroomService) {
+        this.classroomService = classroomService;
+    }
+
+    @GetMapping
+    public ResponseEntity<List<ClassroomDTO>> getAllClassrooms() {
+        List<Classroom> classrooms = classroomService.getAllClassrooms();
+        List<ClassroomDTO> dto = classrooms.stream()
+                .map(ClassroomDTO::convertToDTO)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(dto);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ClassroomDTO> getClassroomById(@PathVariable Long id) {
+        Classroom classroom = classroomService.getClassroomById(id);
+        ClassroomDTO dto = ClassroomDTO.convertToDTO(classroom);
+        return ResponseEntity.ok(dto);
+    }
+
+    @PostMapping
+    public ResponseEntity<ClassroomDTO> createClassroom(@Valid @RequestBody CreateClassroomDTO classroomDTO) {
+        Classroom classroom = classroomService.createClassroom(classroomDTO);
+        ClassroomDTO responseDTO = ClassroomDTO.convertToDTO(classroom);
+
+        URI location = URI.create(String.format("/api/v1/classroom/%d", classroom.getId()));
+
+        return ResponseEntity.created(location).body(responseDTO);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ClassroomDTO> updateClassroom(@PathVariable Long id, @Valid @RequestBody ClassroomDTO classroomDTO) {
+        Classroom classroom = classroomService.updateClassroom(id, classroomDTO);
+        ClassroomDTO responseDTO = ClassroomDTO.convertToDTO(classroom);
+        return ResponseEntity.ok(responseDTO);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteClassroom(@PathVariable Long id) {
+        classroomService.deleteClassroom(id);
+        return ResponseEntity.noContent().build();
+    }
+
+}

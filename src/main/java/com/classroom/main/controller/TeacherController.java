@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 @Tag(name = "Teacher", description = "Teacher API")
 @RestController
-@RequestMapping("/api/v1/teacher")
+@RequestMapping("/teacher")
 public class TeacherController {
     private final TeacherService teacherService;
 

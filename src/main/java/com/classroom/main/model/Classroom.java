@@ -32,9 +32,4 @@ public class Classroom {
 
     private Long id_teacher;
 
-    @CreationTimestamp
-    private LocalDateTime createdDate;
-
-    @UpdateTimestamp
-    private LocalDateTime updatedDate;
 }
