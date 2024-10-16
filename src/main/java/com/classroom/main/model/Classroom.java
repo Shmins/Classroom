@@ -30,6 +30,8 @@ public class Classroom {
     @Enumerated(EnumType.STRING)
     private Turn turn;
 
-    private Long id_teacher;
+    @OneToOne
+    @JoinColumn(name = "id_teacher")
+    private Teacher id_teacher;
 
 }

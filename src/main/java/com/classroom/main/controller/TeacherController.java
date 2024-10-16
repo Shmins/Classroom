@@ -1,11 +1,9 @@
 package com.classroom.main.controller;
 
 import com.classroom.main.controller.dto.CreateTeacherDTO;
-import com.classroom.main.controller.dto.TeacherDTO;
+import com.classroom.main.controller.dto.TeacherDto;
 import com.classroom.main.model.Teacher;
 import com.classroom.main.service.TeacherService;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -26,35 +24,35 @@ public class TeacherController {
     }
 
     @GetMapping
-    public ResponseEntity<List<TeacherDTO>> getAllTeachers() {
+    public ResponseEntity<List<TeacherDto>> getAllTeachers() {
         List<Teacher> teachers = teacherService.getAllTeachers();
-        List<TeacherDTO> dto = teachers.stream()
-                .map(TeacherDTO::convetToDTO)
+        List<TeacherDto> dto = teachers.stream()
+                .map(TeacherDto::convetToDTO)
                 .collect(Collectors.toList());
         return ResponseEntity.ok(dto);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<TeacherDTO> getTeacherById(@PathVariable Long id) {
+    public ResponseEntity<TeacherDto> getTeacherById(@PathVariable Long id) {
         Teacher teacher = teacherService.getTeacherById(id);
-        TeacherDTO dto = TeacherDTO.convetToDTO(teacher);
+        TeacherDto dto = TeacherDto.convetToDTO(teacher);
         return ResponseEntity.ok(dto);
     }
 
     @PostMapping
-    public ResponseEntity<TeacherDTO> createTeacher(@Valid @RequestBody CreateTeacherDTO teacherDTO) {
+    public ResponseEntity<TeacherDto> createTeacher(@Valid @RequestBody CreateTeacherDTO teacherDTO) {
         Teacher teachers = teacherService.createTeacher(teacherDTO);
-        TeacherDTO responseDTO = TeacherDTO.convetToDTO(teachers);
+        TeacherDto responseDTO = TeacherDto.convetToDTO(teachers);
 
-        URI location = URI.create(String.format("/api/v1/teacher/%d", teachers.getId()));
+        URI location = URI.create(String.format("/api/v1/teacher/%d", teachers.getIdTeacher()));
 
         return ResponseEntity.created(location).body(responseDTO);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<TeacherDTO> updateTeacher(@PathVariable Long id, @Valid @RequestBody TeacherDTO teacherDTO) {
+    public ResponseEntity<TeacherDto> updateTeacher(@PathVariable Long id, @Valid @RequestBody TeacherDto teacherDTO) {
         Teacher teacher = teacherService.updateTeacher(id, teacherDTO);
-        TeacherDTO responseDTO = TeacherDTO.convetToDTO(teacher);
+        TeacherDto responseDTO = TeacherDto.convetToDTO(teacher);
         return ResponseEntity.ok(responseDTO);
     }
 

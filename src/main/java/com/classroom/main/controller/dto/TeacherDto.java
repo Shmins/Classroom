@@ -10,15 +10,15 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class TeacherDTO {
+public class TeacherDto {
     private String name;
     private String email;
     private String password;
     private LocalDateTime createdDate;
     private LocalDateTime updatedDate;
 
-    public static TeacherDTO convetToDTO(Teacher teacher){
-        TeacherDTO dto = new TeacherDTO();
+    public static TeacherDto convetToDTO(Teacher teacher){
+        TeacherDto dto = new TeacherDto();
         dto.setName(teacher.getName());
         dto.setEmail(teacher.getEmail());
         dto.setPassword(teacher.getPassword());

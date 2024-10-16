@@ -1,7 +1,7 @@
 package com.classroom.main.service;
 
 import com.classroom.main.controller.dto.CreateTeacherDTO;
-import com.classroom.main.controller.dto.TeacherDTO;
+import com.classroom.main.controller.dto.TeacherDto;
 import com.classroom.main.model.Teacher;
 import com.classroom.main.repository.TeacherRepository;
 import jakarta.validation.Valid;
@@ -15,7 +15,7 @@ import java.util.Optional;
 public class TeacherService {
 
     private final TeacherRepository teacherRepository;
-    private TeacherDTO TeacherDTO;
+    private TeacherDto TeacherDTO;
 
 
 
@@ -29,17 +29,8 @@ public class TeacherService {
     }
 
     public Teacher getTeacherById(Long id) {
-        Optional<Teacher> teacher = teacherRepository.findById(id);
-
-        if(teacher.isEmpty()) {
-            throw new IllegalStateException("Teacher with id " + id + " does not exist");
-        }
-
-        teacher.get().setName(TeacherDTO.getName());
-        teacher.get().setEmail(TeacherDTO.getEmail());
-        teacher.get().setPassword(TeacherDTO.getPassword());
-
-        return teacherRepository.save(teacher.get());
+        return teacherRepository.findById(id)
+                .orElseThrow(() -> new IllegalStateException("Teacher with id " + id + " does not exist"));
     }
     public Teacher createTeacher(@Valid CreateTeacherDTO teacherDTO) {
         Teacher teacher = new Teacher();
@@ -52,7 +43,7 @@ public class TeacherService {
     }
 
 
-public Teacher updateTeacher(Long id, TeacherDTO teacherDTO) {
+public Teacher updateTeacher(Long id, TeacherDto teacherDTO) {
         Optional<Teacher> teacher = teacherRepository.findById(id);
 
         if(teacher.isEmpty()) {
