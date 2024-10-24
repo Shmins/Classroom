@@ -1,0 +1,8 @@
+CREATE TABLE IF NOT EXISTS Classroom (
+    id_classroom INT PRIMARY KEY AUTO_INCREMENT,
+    name_class VARCHAR(255) NOT NULL,
+    turn ENUM('morning', 'afternoon', 'night') NOT NULL,
+    id_teacher INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);

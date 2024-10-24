@@ -34,4 +34,11 @@ public class Classroom {
     @JoinColumn(name = "id_teacher")
     private Teacher id_teacher;
 
+    public Classroom(Classroom classroom) {
+        this.turn = classroom.getTurn();
+        this.School_segment = classroom.School_segment;
+        this.id = classroom.getId();
+        this.id_teacher = classroom.getId_teacher();
+        this.name_class = classroom.getName_class();
+    }
 }
